@@ -472,6 +472,10 @@ public class Main extends Game implements Consumer {
 	@Override
 	public void resize(int width, int height) {
 		camera.setToOrtho(false, width, height);
+		
+		for(Updateable up : ScreenRegistry.instance().getAll()){
+			up.container.onResize();
+		}
 	}
 
 	public void redirectSysOut() {

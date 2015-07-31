@@ -44,4 +44,8 @@ public abstract class UiElement {
 	public boolean onKeyTyped(char key) {
 		return false;
 	}
+	
+	public void onResize(){
+		
+	}
 }

@@ -58,4 +58,10 @@ public class UiContainer {
 
 		return false;
 	}
+	
+	public void onResize(){
+		for (UiElement e : elements) {
+			e.onResize();
+		}
+	}
 }

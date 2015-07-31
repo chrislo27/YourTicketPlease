@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import ticketsplease.screen.Updateable;
 
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 
 
@@ -23,6 +24,7 @@ public class ScreenRegistry implements Disposable{
 	}
 
 	private HashMap<String, Updateable> updateables = new HashMap<>(16);
+	private Array<Updateable> all = new Array<>(16);
 	
 	private void loadResources() {
 
@@ -30,6 +32,7 @@ public class ScreenRegistry implements Disposable{
 
 	public ScreenRegistry add(String id, Updateable up){
 		updateables.put(id, up);
+		all.add(up);
 		
 		return this;
 	}
@@ -47,6 +50,10 @@ public class ScreenRegistry implements Disposable{
 		for(Updateable entry : updateables.values()){
 			entry.dispose();
 		}
+	}
+	
+	public Array<Updateable> getAll(){
+		return all;
 	}
 	
 }
