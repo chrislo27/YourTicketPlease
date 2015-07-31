@@ -5,8 +5,9 @@ import ticketsplease.Settings;
 
 public abstract class BackButton extends Button {
 
-	public BackButton(float x, float y) {
-		super(x, y, 64f / Settings.DEFAULT_WIDTH, 64f / Settings.DEFAULT_HEIGHT, null);
+	public BackButton(UiCorner corner) {
+		super(0, 0, 64f / Settings.DEFAULT_WIDTH, 64f / Settings.DEFAULT_HEIGHT, null);
+		this.setFixed(corner, 64, 64);
 	}
 
 	@Override

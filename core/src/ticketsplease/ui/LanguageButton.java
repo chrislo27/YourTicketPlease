@@ -8,8 +8,9 @@ import com.badlogic.gdx.graphics.Color;
 
 public class LanguageButton extends Button {
 
-	public LanguageButton(int x, int y) {
-		super(x, y, 64f / Settings.DEFAULT_WIDTH, 64f / Settings.DEFAULT_HEIGHT, null);
+	public LanguageButton(UiCorner corner) {
+		super(0, 0, 64f / Settings.DEFAULT_WIDTH, 64f / Settings.DEFAULT_HEIGHT, null);
+		this.setFixed(corner, 64, 64);
 	}
 
 	@Override

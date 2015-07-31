@@ -6,6 +6,7 @@ import ticketsplease.Translator;
 import ticketsplease.ui.BackButton;
 import ticketsplease.ui.Button;
 import ticketsplease.ui.SettingsButton;
+import ticketsplease.ui.UiElement.UiCorner;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -34,9 +35,8 @@ public strictfp class MainMenuScreen extends Updateable {
 			}
 			
 		});
-		container.elements.add(new SettingsButton(0, 0));
-		container.elements.add(new BackButton(1f - (64f / Settings.DEFAULT_WIDTH),
-				1f - (64f / Settings.DEFAULT_HEIGHT)) {
+		container.elements.add(new SettingsButton(UiCorner.BOTTOMLEFT));
+		container.elements.add(new BackButton(UiCorner.TOPRIGHT) {
 
 			@Override
 			public boolean onLeftClick() {
