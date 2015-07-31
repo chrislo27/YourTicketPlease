@@ -63,11 +63,6 @@ public class StockAssetLoader implements IAssetLoader {
 		manager.load(AssetMap.add("teleporterring", "images/particle/teleporterring.png"),
 				Texture.class);
 
-		// entities
-		manager.load(AssetMap.add("player", "images/entity/player/player.png"), Texture.class);
-		manager.load(AssetMap.add("player_eyes", "images/entity/player/player_eyes.png"), Texture.class);
-		manager.load(AssetMap.add("bird", "images/entity/bird.png"), Texture.class);
-
 		// transitions
 		manager.load(AssetMap.add("transition_door", "images/transition/door_vancouver.png"), Texture.class);
 		
@@ -86,7 +81,6 @@ public class StockAssetLoader implements IAssetLoader {
 
 		// unmanaged textures
 		textures.put("gear", new Texture("images/gear.png"));
-		textures.put("laserfx", new Texture("images/laser.png"));
 
 	}
 
