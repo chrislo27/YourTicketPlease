@@ -6,6 +6,7 @@ import ticketsplease.util.SimplexNoise;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 
 public class LiquidContainer {
@@ -75,10 +76,10 @@ public class LiquidContainer {
 		}
 	}
 
-	public void render(Main main, float x, float y) {
+	public void render(Main main, OrthographicCamera camera, float x, float y) {
 		renderUpdate(main);
 
-		main.verticesRenderer.begin(Main.camera.combined, GL20.GL_TRIANGLES);
+		main.verticesRenderer.begin(camera.combined, GL20.GL_TRIANGLES);
 
 		float lowestPoint = endWave * maxPeak;
 
