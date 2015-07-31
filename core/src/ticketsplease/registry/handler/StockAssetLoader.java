@@ -33,9 +33,6 @@ public class StockAssetLoader implements IAssetLoader {
 		manager.load(AssetMap.add("detectionarrow", "images/ui/detection.png"), Texture.class);
 		manager.load(AssetMap.add("playerdirectionarrow", "images/ui/player-arrow.png"),
 				Texture.class);
-		manager.load(AssetMap.add("invslot", "images/ui/inventory/itemslot.png"), Texture.class);
-		manager.load(AssetMap.add("heartmask", "images/ui/healthbar/heartmask.png"), Texture.class);
-		manager.load(AssetMap.add("healthbg", "images/ui/healthbar/heartbg.png"), Texture.class);
 
 		// particle
 		manager.load(AssetMap.add("money", "images/particle/money.png"), Texture.class);
@@ -66,12 +63,6 @@ public class StockAssetLoader implements IAssetLoader {
 		manager.load(AssetMap.add("teleporterring", "images/particle/teleporterring.png"),
 				Texture.class);
 
-		// effects
-		manager.load(AssetMap.add("effecticonblindness", "images/ui/effect/icon/blindness.png"),
-				Texture.class);
-		manager.load(AssetMap.add("effectoverlayblindness", "images/ui/effect/blindness.png"),
-				Texture.class);
-
 		// entities
 		manager.load(AssetMap.add("player", "images/entity/player/player.png"), Texture.class);
 		manager.load(AssetMap.add("player_eyes", "images/entity/player/player_eyes.png"), Texture.class);
@@ -82,17 +73,6 @@ public class StockAssetLoader implements IAssetLoader {
 		
 		// misc
 		manager.load(AssetMap.add("vignette", "images/ui/vignette.png"), Texture.class);
-		manager.load(AssetMap.add("voidend", "images/voidend.png"), Texture.class);
-		manager.load(AssetMap.add("circlegradient", "images/circlegradient.png"), Texture.class);
-		manager.load(AssetMap.add("stunhalo", "images/stunhalo.png"), Texture.class);
-		manager.load(AssetMap.add("featheredcircle", "images/featheredcircle.png"), Texture.class);
-
-		// background related
-		manager.load(AssetMap.add("starrysky", "images/starrysky.png"), Texture.class);
-		manager.load(AssetMap.add("celestialbody_moon", "images/celestialbodies/moon.png"),
-				Texture.class);
-		manager.load(AssetMap.add("celestialbody_sun", "images/celestialbodies/sun.png"),
-				Texture.class);
 
 		// sfx
 
