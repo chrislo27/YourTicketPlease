@@ -26,7 +26,7 @@ public class TransitionScreen extends Updateable {
 		if (to == null) {
 			if (onTo) main.setScreen(nextScreen);
 		} else {
-			if ((to.finished() && onTo) || previousScreen == nextScreen) main.setScreen(nextScreen);
+			if ((to.finished() && onTo)) main.setScreen(nextScreen);
 		}
 
 		if (from == null) {

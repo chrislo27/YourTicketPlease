@@ -19,6 +19,7 @@ import ticketsplease.registry.ScreenRegistry;
 import ticketsplease.screen.AssetLoadingScreen;
 import ticketsplease.screen.MainMenuScreen;
 import ticketsplease.screen.Updateable;
+import ticketsplease.transition.TrainDoors;
 import ticketsplease.transition.Transition;
 import ticketsplease.transition.TransitionScreen;
 import ticketsplease.util.AssetMap;
@@ -242,7 +243,10 @@ public class Main extends Game implements Consumer {
 	}
 
 	public void prepareStates() {
-		ScreenRegistry.instance().add("mainmenu", new MainMenuScreen(this)).add("assetloading", new AssetLoadingScreen(this));
+		ScreenRegistry reg = ScreenRegistry.instance();
+		reg.add("mainmenu", new MainMenuScreen(this));
+		reg.add("assetloading", new AssetLoadingScreen(this));
+		reg.add("transition", new TransitionScreen(this));
 	}
 
 	@Override
@@ -427,6 +431,9 @@ public class Main extends Game implements Consumer {
 							"This is a forced crash caused by pressing ALT+Q while in debug mode.");
 				} else if (Gdx.input.isKeyJustPressed(Keys.G)) {
 					gears.reset();
+					
+					// FIXME
+					this.transition(new TrainDoors(true), new TrainDoors(false), ScreenRegistry.get("mainmenu"));
 				}
 
 			}
