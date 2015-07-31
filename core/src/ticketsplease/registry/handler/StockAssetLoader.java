@@ -77,6 +77,9 @@ public class StockAssetLoader implements IAssetLoader {
 		manager.load(AssetMap.add("player_eyes", "images/entity/player/player_eyes.png"), Texture.class);
 		manager.load(AssetMap.add("bird", "images/entity/bird.png"), Texture.class);
 
+		// transitions
+		manager.load(AssetMap.add("transition_door", "images/transition/door_vancouver.png"), Texture.class);
+		
 		// misc
 		manager.load(AssetMap.add("vignette", "images/ui/vignette.png"), Texture.class);
 		manager.load(AssetMap.add("voidend", "images/voidend.png"), Texture.class);
