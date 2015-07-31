@@ -1,6 +1,7 @@
 package ticketsplease.ui;
 
 import ticketsplease.Main;
+import ticketsplease.Settings;
 import ticketsplease.Translator;
 
 import com.badlogic.gdx.graphics.Color;
@@ -8,7 +9,7 @@ import com.badlogic.gdx.graphics.Color;
 public class LanguageButton extends Button {
 
 	public LanguageButton(int x, int y) {
-		super(x, y, 48, 48, null);
+		super(x, y, 64f / Settings.DEFAULT_WIDTH, 64f / Settings.DEFAULT_HEIGHT, null);
 	}
 
 	@Override

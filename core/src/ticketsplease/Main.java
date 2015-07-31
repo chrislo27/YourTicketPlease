@@ -16,6 +16,8 @@ import javax.swing.JTextArea;
 import ticketsplease.registry.AssetRegistry;
 import ticketsplease.registry.ErrorLogRegistry;
 import ticketsplease.registry.ScreenRegistry;
+import ticketsplease.screen.AssetLoadingScreen;
+import ticketsplease.screen.MainMenuScreen;
 import ticketsplease.screen.Updateable;
 import ticketsplease.transition.Transition;
 import ticketsplease.transition.TransitionScreen;
@@ -50,7 +52,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -142,7 +143,7 @@ public class Main extends Game implements Consumer {
 
 		ShaderProgram.pedantic = false;
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, Settings.DEFAULT_WIDTH, Settings.DEFAULT_HEIGHT);
+		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		batch = new SpriteBatch();
 		batch.enableBlending();
 		
@@ -221,7 +222,7 @@ public class Main extends Game implements Consumer {
 
 		prepareStates();
 
-		// TODO set to loading screen
+		this.setScreen(ScreenRegistry.get("assetloading"));
 
 		new Thread("version checker") {
 
@@ -241,7 +242,7 @@ public class Main extends Game implements Consumer {
 	}
 
 	public void prepareStates() {
-		
+		ScreenRegistry.instance().add("mainmenu", new MainMenuScreen(this)).add("assetloading", new AssetLoadingScreen(this));
 	}
 
 	@Override
@@ -338,7 +339,7 @@ public class Main extends Game implements Consumer {
 					+ (Gdx.graphics.getFramesPerSecond() <= (MAX_FPS / 4f) ? "[RED]"
 							: (Gdx.graphics.getFramesPerSecond() <= (MAX_FPS / 2f) ? "[YELLOW]"
 									: "")) + Gdx.graphics.getFramesPerSecond() + "[]", 5,
-					Settings.DEFAULT_HEIGHT - 5);
+					Gdx.graphics.getHeight() - 5);
 		}
 		if (Settings.debug) {
 			font.getData().markupEnabled = false;
@@ -348,7 +349,7 @@ public class Main extends Game implements Consumer {
 							+ ") " + Arrays.toString(lastFPS),
 					5 + font.getSpaceWidth()
 							+ (Utils.getWidth(font, "FPS: " + Gdx.graphics.getFramesPerSecond())),
-					Settings.DEFAULT_HEIGHT - 5);
+							Gdx.graphics.getHeight() - 5);
 			font.getData().markupEnabled = true;
 		}
 
@@ -464,24 +465,13 @@ public class Main extends Game implements Consumer {
 		return "Player" + MathUtils.random(9999);
 	}
 
-	private static Vector3 unprojector = new Vector3(0, 0, 0);
-
-	public static int getInputX() {
-		return (int) (camera.unproject(unprojector.set(Gdx.input.getX(), Gdx.input.getY(), 0)).x);
-	}
-
-	public static int getInputY() {
-		return (int) ((camera.unproject(unprojector.set(Gdx.input.getX(), Gdx.graphics.getHeight()
-				- Gdx.input.getY(), 0)).y));
-	}
-
 	public static String getTitle() {
 		return (Translator.getMsg("gamename") + " " + Main.version);
 	}
 
 	@Override
-	public void resize(int x, int y) {
-
+	public void resize(int width, int height) {
+		camera.setToOrtho(false, width, height);
 	}
 
 	public void redirectSysOut() {
@@ -693,7 +683,7 @@ public class Main extends Game implements Consumer {
 	 * @return the y-down conversion of input
 	 */
 	public static int convertY(float f) {
-		return Math.round(Settings.DEFAULT_HEIGHT - f);
+		return Math.round(Gdx.graphics.getHeight() - f);
 	}
 
 	public void drawTextBg(BitmapFont font, String text, float x, float y, float wrapWidth, int align) {

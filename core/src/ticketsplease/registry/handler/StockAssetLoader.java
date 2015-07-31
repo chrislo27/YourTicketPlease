@@ -31,10 +31,6 @@ public class StockAssetLoader implements IAssetLoader {
 		manager.load(AssetMap.add("guibgfalse", "images/ui/button/bgfalse.png"), Texture.class);
 		manager.load(AssetMap.add("guibgtrue", "images/ui/button/bgtrue.png"), Texture.class);
 		manager.load(AssetMap.add("detectionarrow", "images/ui/detection.png"), Texture.class);
-		manager.load(AssetMap.add("guilevelselect", "images/ui/button/levelselect.png"),
-				Texture.class);
-		manager.load(AssetMap.add("guinextlevel", "images/ui/button/nextlevel.png"), Texture.class);
-		manager.load(AssetMap.add("guiretry", "images/ui/button/retry.png"), Texture.class);
 		manager.load(AssetMap.add("playerdirectionarrow", "images/ui/player-arrow.png"),
 				Texture.class);
 		manager.load(AssetMap.add("invslot", "images/ui/inventory/itemslot.png"), Texture.class);

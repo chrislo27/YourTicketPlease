@@ -3,6 +3,7 @@ package ticketsplease.ui;
 import ticketsplease.Main;
 import ticketsplease.Settings;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 
 public class UiContainer {
@@ -45,9 +46,12 @@ public class UiContainer {
 
 	protected static boolean mouseIn(UiElement e) {
 		if (!e.visible()) return false;
-		if (Main.getInputX() >= e.getX() && Main.getInputX() <= (e.getX()) + (e.getWidth())) {
-			if (Settings.DEFAULT_HEIGHT - Main.getInputY() >= e.getY()
-					&& Settings.DEFAULT_HEIGHT - Main.getInputY() <= (e.getY()) + (e.getHeight())) {
+		if (Gdx.input.getX() >= e.getX() * Gdx.graphics.getWidth()
+				&& Gdx.input.getX() <= (e.getX() * Gdx.graphics.getWidth())
+						+ (e.getWidth() * Gdx.graphics.getWidth())) {
+			if (Gdx.graphics.getHeight() - Gdx.input.getY() >= e.getY() * Gdx.graphics.getHeight()
+					&& Gdx.graphics.getHeight() - Gdx.input.getY() <= (e.getY() * Gdx.graphics
+							.getHeight()) + (e.getHeight() * Gdx.graphics.getHeight())) {
 				return true;
 			}
 		}

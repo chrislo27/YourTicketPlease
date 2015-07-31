@@ -4,6 +4,7 @@ import ticketsplease.Main;
 import ticketsplease.Translator;
 import ticketsplease.registry.AssetRegistry;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.utils.Align;
@@ -14,7 +15,7 @@ public class Button extends UiElement {
 	protected GlyphLayout glyphLayout = new GlyphLayout();
 
 	/**
-	 * set width and/or height to -1 to set default (160, 32)
+	 * set width and/or height to -1 to set default
 	 * 
 	 * @param x
 	 * @param y
@@ -22,23 +23,23 @@ public class Button extends UiElement {
 	 * @param height
 	 * @param text
 	 */
-	public Button(int x, int y, int width, int height, String text) {
+	public Button(float x, float y, float width, float height, String text) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
 		this.text = text;
-
-		if (width == -1) this.width = 160;
-		if (height == -1) this.height = 32;
 	}
 
 	public void imageRender(Main main, String img) {
-		main.batch.draw(AssetRegistry.getTexture(img), x, y, width, height);
+		main.batch.draw(AssetRegistry.getTexture(img), x * Gdx.graphics.getWidth(), y
+				* Gdx.graphics.getHeight(), width * Gdx.graphics.getWidth(),
+				height * Gdx.graphics.getHeight());
 		if (UiContainer.mouseIn(this)) {
 			main.batch.setColor(Color.CYAN.r, Color.CYAN.g, Color.CYAN.b, 0.42f);
-			main.batch
-					.draw(AssetRegistry.getTexture(img), x, y, width, height);
+			main.batch.draw(AssetRegistry.getTexture(img), x * Gdx.graphics.getWidth(), y
+					* Gdx.graphics.getHeight(), width * Gdx.graphics.getWidth(), height
+					* Gdx.graphics.getHeight());
 			main.batch.setColor(Color.WHITE);
 		}
 	}
@@ -46,7 +47,7 @@ public class Button extends UiElement {
 	@Override
 	public void render(Main main) {
 		imageRender(main, "guibg");
-		renderText(main, Translator.getMsg(text), this.width);
+		renderText(main, Translator.getMsg(text), this.width * Gdx.graphics.getWidth());
 	}
 
 	protected void renderText(Main main, String text, float width) {
@@ -56,9 +57,10 @@ public class Button extends UiElement {
 		if (glyphLayout.width + 6 > width) {
 			//main.font.setScale(width / (main.font.getBounds(text).width + 6), 1);
 		}
-		
-		main.font.draw(main.batch, text, x + (width / 2),
-				y + (height / 2) + (glyphLayout.height / 2), width, Align.center, false);
+
+		main.font.draw(main.batch, text, x * Gdx.graphics.getWidth() + (width / 2), y
+				* Gdx.graphics.getHeight() + (height * Gdx.graphics.getHeight() / 2)
+				+ (glyphLayout.height / 2), 0, Align.center, false);
 	}
 
 	@Override

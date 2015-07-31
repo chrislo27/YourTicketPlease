@@ -1,11 +1,12 @@
 package ticketsplease.ui;
 
 import ticketsplease.Main;
+import ticketsplease.Settings;
 
 public abstract class BackButton extends Button {
 
-	public BackButton(int x, int y) {
-		super(x, y, 32, 32, null);
+	public BackButton(float x, float y) {
+		super(x, y, 64f / Settings.DEFAULT_WIDTH, 64f / Settings.DEFAULT_HEIGHT, null);
 	}
 
 	@Override

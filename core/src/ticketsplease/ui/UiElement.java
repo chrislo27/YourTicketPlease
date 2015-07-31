@@ -4,28 +4,28 @@ import ticketsplease.Main;
 
 public abstract class UiElement {
 
-	protected int x;
-	protected int y;
-	protected int width;
-	protected int height;
+	protected float x;
+	protected float y;
+	protected float width;
+	protected float height;
 
 	public abstract void render(Main main);
 
 	public abstract boolean visible();
 
-	public int getX() {
+	public float getX() {
 		return x;
 	}
 
-	public int getY() {
+	public float getY() {
 		return y;
 	}
 
-	public int getWidth() {
+	public float getWidth() {
 		return width;
 	}
 
-	public int getHeight() {
+	public float getHeight() {
 		return height;
 	}
 

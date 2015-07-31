@@ -1,6 +1,7 @@
 package ticketsplease.ui;
 
 import ticketsplease.Main;
+import ticketsplease.Settings;
 import ticketsplease.registry.AssetRegistry;
 
 import com.badlogic.gdx.Gdx;
@@ -30,16 +31,16 @@ public class Slider extends UiElement {
 
 	@Override
 	public void render(Main main) {
-		main.batch.draw(AssetRegistry.getTexture("guislider"), x, y, width,
-				height);
-		main.batch.draw(AssetRegistry.getTexture("guisliderarrow"), x
-				+ ((width - 32) * slider), y, 32, 32);
+		main.batch.draw(AssetRegistry.getTexture("guislider"), x * Gdx.graphics.getWidth(), y * Gdx.graphics.getHeight(), width * Gdx.graphics.getWidth(),
+				height * Gdx.graphics.getHeight());
+		main.batch.draw(AssetRegistry.getTexture("guisliderarrow"), x * Gdx.graphics.getWidth()
+				+ ((width * Gdx.graphics.getWidth() - 32) * slider), y * Gdx.graphics.getHeight(), 32, 32);
 
 		if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
-			if (Main.getInputX() >= x + ((width - 32) * slider)
-					&& Main.getInputX() <= x + ((width - 32) * slider) + 32) {
-				if (Main.convertY(Main.getInputY()) >= y
-						&& Main.convertY(Main.getInputY()) <= y + height) {
+			if (Gdx.input.getX() >= x * Gdx.graphics.getWidth() + ((width * Gdx.graphics.getWidth() - 32) * slider)
+					&& Gdx.input.getX() <= x * Gdx.graphics.getWidth() + ((width * Gdx.graphics.getWidth() - 32) * slider) + 32) {
+				if (Gdx.graphics.getHeight() - Gdx.input.getY() >= y * Gdx.graphics.getHeight()
+						&& Gdx.graphics.getHeight() - Gdx.input.getY() <= y * Gdx.graphics.getHeight() + height * Gdx.graphics.getHeight()) {
 					grabbed = true;
 				}
 			}
@@ -47,8 +48,7 @@ public class Slider extends UiElement {
 			grabbed = false;
 		}
 		if (grabbed) {
-			slider = MathUtils.clamp(((Main.getInputX() - x)) / (width - 32f), 0f, 1f);
-
+			slider = MathUtils.clamp(((Gdx.input.getX() - x * Gdx.graphics.getWidth())) / (width * Gdx.graphics.getWidth() - 32f), 0f, 1f);
 		}
 	}
 
