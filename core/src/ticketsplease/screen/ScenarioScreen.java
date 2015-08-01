@@ -25,6 +25,7 @@ public class ScenarioScreen extends Updateable{
 
 	@Override
 	public void tickUpdate() {
+		if(scenario != null) scenario.tickUpdate();
 	}
 
 	@Override

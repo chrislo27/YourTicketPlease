@@ -20,7 +20,7 @@ public class Scenario implements Disposable {
 
 	public float chanceOfInvalidTicket = 0.34327f;
 	public float chanceOfNotEnoughMoney = 0.5f;
-	
+
 	public Array<Entity> entities = new Array<>();
 
 	public Main main;
@@ -37,7 +37,7 @@ public class Scenario implements Disposable {
 	float dragOriginX, dragOriginY;
 
 	public Array<Conversation> conversations = new Array<>();
-	
+
 	public Traveller currentTraveller;
 
 	public Scenario(Main main) {
@@ -108,27 +108,26 @@ public class Scenario implements Disposable {
 			if (conversations.get(i).shouldRemove) conversations.removeIndex(i);
 		}
 
-		if (Gdx.input.isKeyJustPressed(Keys.C) && Settings.debug) {
-			conversations.add(new Conversation(
-					"ohajpdiouehipjfwahouehfadwafgsrhtdashasawrgswaeesfeafewarwafeaewffeawdf",
-					MathUtils.randomBoolean()));
-		}
-		
-		if(Gdx.input.isKeyJustPressed(Keys.N)){
-			if(currentTraveller == null || currentTraveller != null){
+		if (Gdx.input.isKeyJustPressed(Keys.N)) {
+			if (currentTraveller == null || currentTraveller != null) {
 				getNextTraveller();
 			}
 		}
 	}
-	
-	public void getNextTraveller(){
-		currentTraveller = new Traveller(this);
-		//nicelyClearConversations();
-		conversations.add(new Conversation(Translator.getMsg("conv.ticketplease"), true));
+
+	public void tickUpdate() {
+		if (currentTraveller != null) {
+			currentTraveller.tickUpdate();
+		}
 	}
-	
-	public void nicelyClearConversations(){
-		for(Conversation c : conversations){
+
+	public void getNextTraveller() {
+		currentTraveller = new Traveller(this);
+		nicelyClearConversations();
+	}
+
+	public void nicelyClearConversations() {
+		for (Conversation c : conversations) {
 			c.timer = 0;
 		}
 	}
