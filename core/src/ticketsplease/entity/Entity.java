@@ -10,6 +10,7 @@ public abstract class Entity {
 
 	public float x, y, width, height;
 	Scenario scenario;
+	public boolean isBeingReturned = false;
 	
 	public Entity(Scenario s, float x, float y, float w, float h){
 		this.x = x;
@@ -22,16 +23,16 @@ public abstract class Entity {
 	public abstract void render(Renderer renderer);
 	
 	public void renderUpdate(){
+		if(x < scenario.xBoundary){
+			x = scenario.xBoundary;
+		}
+		if(y < scenario.yBoundary){
+			y = scenario.yBoundary;
+		}
+		if(x + width > scenario.xBoundary + scenario.sizex){
+			x = scenario.xBoundary + scenario.sizex - width;
+		}
 		if(this != scenario.currentDragging){
-			if(x < scenario.xBoundary){
-				x = scenario.xBoundary;
-			}
-			if(y < scenario.yBoundary){
-				y = scenario.yBoundary;
-			}
-			if(x + width > scenario.xBoundary + scenario.sizex){
-				x = scenario.xBoundary + scenario.sizex - width;
-			}
 			if(y + height > scenario.yBoundary + scenario.sizey){
 				float returnSpeed = 1.25f;
 				y -= returnSpeed * Gdx.graphics.getDeltaTime();
