@@ -68,6 +68,7 @@ public class StockAssetLoader implements IAssetLoader {
 		
 		// misc
 		manager.load(AssetMap.add("vignette", "images/ui/vignette.png"), Texture.class);
+		manager.load(AssetMap.add("desk", "images/desk.png"), Texture.class);
 
 		// sfx
 
