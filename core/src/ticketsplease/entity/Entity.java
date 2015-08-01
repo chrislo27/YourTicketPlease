@@ -22,6 +22,8 @@ public abstract class Entity {
 	
 	public abstract void render(Renderer renderer);
 	
+	public abstract void onInteract(Renderer renderer, float partX, float partY);
+	
 	public void renderUpdate(){
 		if(x < scenario.xBoundary){
 			x = scenario.xBoundary;

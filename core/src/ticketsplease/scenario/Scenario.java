@@ -5,6 +5,7 @@ import ticketsplease.Settings;
 import ticketsplease.entity.Entity;
 import ticketsplease.entity.EntityRobot;
 import ticketsplease.renderer.Renderer;
+import ticketsplease.util.Utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
@@ -18,7 +19,7 @@ public class Scenario implements Disposable {
 	public Array<Entity> entities = new Array<>();
 
 	public Main main;
-	
+
 	public float sizex = 1f;
 	public float sizey = 0.5f;
 	public float xBoundary = 0f;
@@ -29,14 +30,14 @@ public class Scenario implements Disposable {
 	public Entity currentDragging = null;
 	float draggingX, draggingY;
 	float dragOriginX, dragOriginY;
-	
+
 	public Array<Conversation> conversations = new Array<>();
 
 	public Scenario(Main main) {
 		this.main = main;
-		
+
 		renderer = new Renderer(this);
-		
+
 		entities.clear();
 		entities.add(new EntityRobot(this, 0, 0));
 	}
@@ -58,30 +59,52 @@ public class Scenario implements Disposable {
 								* Gdx.graphics.getHeight()) {
 					currentDragging = e;
 					dragOriginX = ((Gdx.input.getX() * 1f / Gdx.graphics.getWidth()) - e.x);
-					dragOriginY = (((Gdx.graphics.getHeight() - Gdx.input.getY()) * 1f / Gdx.graphics.getHeight()) - e.y);
+					dragOriginY = (((Gdx.graphics.getHeight() - Gdx.input.getY()) * 1f / Gdx.graphics
+							.getHeight()) - e.y);
 					break;
 				}
 			}
-			
-			if(currentDragging != null){
+
+			if (currentDragging != null) {
 				currentDragging.x = (Gdx.input.getX() * 1f / Gdx.graphics.getWidth()) - dragOriginX;
-				currentDragging.y = ((Gdx.graphics.getHeight() - Gdx.input.getY()) * 1f / Gdx.graphics.getHeight()) - dragOriginY;
+				currentDragging.y = ((Gdx.graphics.getHeight() - Gdx.input.getY()) * 1f / Gdx.graphics
+						.getHeight()) - dragOriginY;
 			}
 		} else {
 			currentDragging = null;
 		}
 
+		if (Utils.isButtonJustPressed(Buttons.RIGHT) && !Gdx.input.isButtonPressed(Buttons.LEFT)) {
+			for (Entity e : entities) {
+				if (currentDragging != null) break;
+				if (Gdx.input.getX() >= e.x * Gdx.graphics.getWidth()
+						&& Gdx.input.getX() <= (e.x + e.width) * Gdx.graphics.getWidth()
+						&& (Gdx.graphics.getHeight() - Gdx.input.getY()) >= e.y
+								* Gdx.graphics.getHeight()
+						&& (Gdx.graphics.getHeight() - Gdx.input.getY()) <= (e.y + e.height)
+								* Gdx.graphics.getHeight()) {
+					e.onInteract(renderer,
+							((Gdx.input.getX() * 1f / Gdx.graphics.getWidth()) - e.x),
+							(((Gdx.graphics.getHeight() - Gdx.input.getY()) * 1f / Gdx.graphics
+									.getHeight()) - e.y));
+					break;
+				}
+			}
+		}
+
 		for (Entity e : entities) {
 			e.renderUpdate();
 		}
-		
-		for(int i = conversations.size - 1; i >= 0; i--){
+
+		for (int i = conversations.size - 1; i >= 0; i--) {
 			conversations.get(i).timer -= Gdx.graphics.getDeltaTime();
-			if(conversations.get(i).timer <= -1) conversations.removeIndex(i);
+			if (conversations.get(i).timer <= -1) conversations.removeIndex(i);
 		}
-		
-		if(Gdx.input.isKeyJustPressed(Keys.C) && Settings.debug){
-			conversations.add(new Conversation("ohajpdiouehipjfwahouehfadwafgsrhtdashasawrgswaeesfeafewarwafeaewffeawdf", MathUtils.randomBoolean()));
+
+		if (Gdx.input.isKeyJustPressed(Keys.C) && Settings.debug) {
+			conversations.add(new Conversation(
+					"ohajpdiouehipjfwahouehfadwafgsrhtdashasawrgswaeesfeafewarwafeaewffeawdf",
+					MathUtils.randomBoolean()));
 		}
 	}
 
