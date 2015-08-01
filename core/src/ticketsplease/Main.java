@@ -18,6 +18,7 @@ import ticketsplease.registry.ErrorLogRegistry;
 import ticketsplease.registry.ScreenRegistry;
 import ticketsplease.screen.AssetLoadingScreen;
 import ticketsplease.screen.MainMenuScreen;
+import ticketsplease.screen.ScenarioScreen;
 import ticketsplease.screen.Updateable;
 import ticketsplease.transition.TrainDoors;
 import ticketsplease.transition.Transition;
@@ -61,7 +62,6 @@ import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer20;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Align;
 
 /**
@@ -247,6 +247,7 @@ public class Main extends Game implements Consumer {
 		reg.add("mainmenu", new MainMenuScreen(this));
 		reg.add("assetloading", new AssetLoadingScreen(this));
 		reg.add("transition", new TransitionScreen(this));
+		reg.add("scenario", new ScenarioScreen(this));
 	}
 
 	@Override

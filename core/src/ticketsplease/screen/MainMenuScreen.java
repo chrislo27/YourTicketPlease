@@ -1,8 +1,9 @@
 package ticketsplease.screen;
 
 import ticketsplease.Main;
-import ticketsplease.Settings;
 import ticketsplease.Translator;
+import ticketsplease.registry.ScreenRegistry;
+import ticketsplease.transition.TrainDoors;
 import ticketsplease.ui.BackButton;
 import ticketsplease.ui.Button;
 import ticketsplease.ui.SettingsButton;
@@ -19,15 +20,17 @@ public strictfp class MainMenuScreen extends Updateable {
 		super(m);
 
 		container.elements.add(new Button(0.25f, 0.1f, 0.5f, 0.1f,
-				"menu.singleplayer") {
+				"menu.story") {
 
 			@Override
 			public boolean onLeftClick() {
-				return false;
+				main.transition(new TrainDoors(true), new TrainDoors(false), ScreenRegistry.get("scenario"));
+				
+				return true;
 			}
 		});
 		container.elements.add(new Button(0.25f, 0.25f, 0.5f, 0.1f,
-				"menu.multiplayer") {
+				"something here") {
 
 			@Override
 			public boolean onLeftClick() {
