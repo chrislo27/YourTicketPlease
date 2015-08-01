@@ -2,6 +2,7 @@ package ticketsplease.scenario;
 
 import ticketsplease.Main;
 import ticketsplease.Settings;
+import ticketsplease.Translator;
 import ticketsplease.entity.Entity;
 import ticketsplease.entity.EntityRobot;
 import ticketsplease.renderer.Renderer;
@@ -104,7 +105,7 @@ public class Scenario implements Disposable {
 
 		for (int i = conversations.size - 1; i >= 0; i--) {
 			conversations.get(i).timer -= Gdx.graphics.getDeltaTime();
-			if (conversations.get(i).timer <= -1) conversations.removeIndex(i);
+			if (conversations.get(i).shouldRemove) conversations.removeIndex(i);
 		}
 
 		if (Gdx.input.isKeyJustPressed(Keys.C) && Settings.debug) {
@@ -114,7 +115,7 @@ public class Scenario implements Disposable {
 		}
 		
 		if(Gdx.input.isKeyJustPressed(Keys.N)){
-			if(currentTraveller == null){
+			if(currentTraveller == null || currentTraveller != null){
 				getNextTraveller();
 			}
 		}
@@ -122,6 +123,14 @@ public class Scenario implements Disposable {
 	
 	public void getNextTraveller(){
 		currentTraveller = new Traveller(this);
+		//nicelyClearConversations();
+		conversations.add(new Conversation(Translator.getMsg("conv.ticketplease"), true));
+	}
+	
+	public void nicelyClearConversations(){
+		for(Conversation c : conversations){
+			c.timer = 0;
+		}
 	}
 
 	@Override

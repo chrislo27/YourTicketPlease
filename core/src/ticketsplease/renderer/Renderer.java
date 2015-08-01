@@ -63,12 +63,19 @@ public class Renderer implements Disposable {
 		batch.flush();
 
 		// conversations scrolling
-		float height = 0;
+		float combinedHeight = 0;
 		for (int i = 0; i < scenario.conversations.size; i++) {
 			Conversation conv = scenario.conversations.get(i);
-
-			if (conv.timer <= 0) {
-				height += (glyph.height + 12) * conv.timer;
+			
+			if (conv.timer <= 0 && conv.timer >= -1) {
+				combinedHeight += (glyph.height + 12) * conv.timer;
+			}
+			
+			float height = combinedHeight;
+			
+			if(conv.timer <= -1){
+				conv.shouldRemove = true;
+				continue;
 			}
 
 			glyph.setText(main.font, conv.text, Color.WHITE, 256, Align.left, true);
@@ -97,10 +104,10 @@ public class Renderer implements Disposable {
 								- glyph.height - 4 - 4, -18, 16);
 			}
 
-			height += 12 + glyph.height;
+			combinedHeight += 12 + glyph.height;
 		}
 		
-		if(height > Gdx.graphics.getHeight() && scenario.conversations.size >= 1){
+		if(combinedHeight > Gdx.graphics.getHeight() && scenario.conversations.size >= 1){
 			if(scenario.conversations.get(0).timer > 0) scenario.conversations.get(0).timer = 0;
 		}
 
