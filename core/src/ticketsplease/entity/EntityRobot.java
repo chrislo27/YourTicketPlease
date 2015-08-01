@@ -20,4 +20,8 @@ public class EntityRobot extends Entity {
 				height * Gdx.graphics.getHeight());
 	}
 
+	@Override
+	public void onInteract(Renderer renderer, float partX, float partY) {
+	}
+
 }
