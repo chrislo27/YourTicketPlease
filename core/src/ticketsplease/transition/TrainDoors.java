@@ -79,7 +79,7 @@ public class TrainDoors implements Transition {
 				if(pausePercentage >= 1){
 					complete = true;
 				}else{
-					pausePercentage += Gdx.graphics.getDeltaTime() / 0.15f * speed;
+					pausePercentage += Gdx.graphics.getDeltaTime() / 0.2f * speed;
 				}
 			}
 		}
