@@ -1,10 +1,9 @@
 package ticketsplease.scenario;
 
 import ticketsplease.Main;
-import ticketsplease.Settings;
-import ticketsplease.Translator;
 import ticketsplease.entity.Entity;
 import ticketsplease.entity.EntityRobot;
+import ticketsplease.entity.EntityTicket;
 import ticketsplease.renderer.Renderer;
 import ticketsplease.traveller.Traveller;
 import ticketsplease.util.Utils;
@@ -12,7 +11,6 @@ import ticketsplease.util.Utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 
@@ -56,7 +54,8 @@ public class Scenario implements Disposable {
 	public void renderUpdate() {
 		// calc currentDragging
 		if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
-			for (Entity e : entities) {
+			for (int i = entities.size - 1; i >= 0; i--) {
+				Entity e = entities.get(i);
 				if (currentDragging != null) break;
 				if (Gdx.input.getX() >= e.x * Gdx.graphics.getWidth()
 						&& Gdx.input.getX() <= (e.x + e.width) * Gdx.graphics.getWidth()
@@ -78,7 +77,12 @@ public class Scenario implements Disposable {
 						.getHeight()) - dragOriginY;
 			}
 		} else {
-			currentDragging = null;
+			if(currentDragging != null){
+				entities.removeValue(currentDragging, true);
+				entities.insert(entities.size, currentDragging);
+				
+				currentDragging = null;
+			}
 		}
 
 		if (Utils.isButtonJustPressed(Buttons.RIGHT) && !Gdx.input.isButtonPressed(Buttons.LEFT)) {
@@ -119,6 +123,14 @@ public class Scenario implements Disposable {
 		if (currentTraveller != null) {
 			currentTraveller.tickUpdate();
 		}
+	}
+	
+	public void spawnTicket(){
+		EntityTicket ticket = new EntityTicket(this, 0.5f, 0.5f);
+		ticket.x = (xBoundary + sizex / 2f) - ticket.width / 2f;
+		ticket.y = (yBoundary + sizey);
+		
+		entities.add(ticket);
 	}
 
 	public void getNextTraveller() {
