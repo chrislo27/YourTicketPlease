@@ -71,6 +71,10 @@ public class StockAssetLoader implements IAssetLoader {
 		manager.load(AssetMap.add("vignette", "images/ui/vignette.png"), Texture.class);
 		manager.load(AssetMap.add("desk", "images/desk.png"), Texture.class);
 
+		// entities
+		manager.load(AssetMap.add("ticket_base", "images/entity/ticket/ticketbase.png"), Texture.class);
+		manager.load(AssetMap.add("ticket_line", "images/entity/ticket/ticket_linecolour.png"), Texture.class);
+		
 		// sfx
 
 		// music
@@ -89,8 +93,6 @@ public class StockAssetLoader implements IAssetLoader {
 	@Override
 	public void addUnmanagedAnimations(HashMap<String, Animation> animations) {
 		// animations
-		animations.put("shine", new LoopingAnimation(0.1f, 20, "images/items/shine/shine.png",
-				false));
 		animations.put("fire-hud", new LoopingAnimation(0.05f, 8, "images/ui/fire-hudnomiddle.png",
 				true).setRegionTile(864, 468).setVertical(false));
 	}
