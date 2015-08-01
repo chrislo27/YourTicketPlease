@@ -21,7 +21,11 @@ public class Traveller {
 		timeTaken++;
 		
 		if(timeTaken == 0){
+			// player saying your ticket please
 			scenario.conversations.add(new Conversation(Translator.getMsg("conv.ticketplease"), true));
+		}else if(timeTaken == Main.TICKS){
+			// ticket spawn
+			scenario.spawnTicket();
 		}
 	}
 	
