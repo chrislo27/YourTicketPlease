@@ -5,6 +5,7 @@ import ticketsplease.Settings;
 import ticketsplease.entity.Entity;
 import ticketsplease.entity.EntityRobot;
 import ticketsplease.renderer.Renderer;
+import ticketsplease.traveller.Traveller;
 import ticketsplease.util.Utils;
 
 import com.badlogic.gdx.Gdx;
@@ -16,6 +17,9 @@ import com.badlogic.gdx.utils.Disposable;
 
 public class Scenario implements Disposable {
 
+	public float chanceOfInvalidTicket = 0.34327f;
+	public float chanceOfNotEnoughMoney = 0.5f;
+	
 	public Array<Entity> entities = new Array<>();
 
 	public Main main;
@@ -32,6 +36,8 @@ public class Scenario implements Disposable {
 	float dragOriginX, dragOriginY;
 
 	public Array<Conversation> conversations = new Array<>();
+	
+	public Traveller currentTraveller;
 
 	public Scenario(Main main) {
 		this.main = main;
@@ -106,6 +112,16 @@ public class Scenario implements Disposable {
 					"ohajpdiouehipjfwahouehfadwafgsrhtdashasawrgswaeesfeafewarwafeaewffeawdf",
 					MathUtils.randomBoolean()));
 		}
+		
+		if(Gdx.input.isKeyJustPressed(Keys.N)){
+			if(currentTraveller == null){
+				getNextTraveller();
+			}
+		}
+	}
+	
+	public void getNextTraveller(){
+		currentTraveller = new Traveller(this);
 	}
 
 	@Override
