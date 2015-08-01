@@ -31,7 +31,7 @@ public class VersionGetter {
 	 * NOTE: This method blocks until it fails or completes
 	 */
 	public void getVersionFromServer() {
-		final String path = "https://raw.githubusercontent.com/chrislo27/VersionPlace/master/ProjectMP-version.txt";
+		final String path = "https://raw.githubusercontent.com/chrislo27/VersionPlace/master/YourTicketPlease-version.txt";
 		long start = System.currentTimeMillis();
 		try {
 			BufferedReader br = new BufferedReader(
