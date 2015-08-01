@@ -33,6 +33,7 @@ public class StockAssetLoader implements IAssetLoader {
 		manager.load(AssetMap.add("detectionarrow", "images/ui/detection.png"), Texture.class);
 		manager.load(AssetMap.add("playerdirectionarrow", "images/ui/player-arrow.png"),
 				Texture.class);
+		manager.load(AssetMap.add("conversation-tick", "images/ui/conversation-tick.png"), Texture.class);
 
 		// particle
 		manager.load(AssetMap.add("money", "images/particle/money.png"), Texture.class);

@@ -1,12 +1,15 @@
 package ticketsplease.scenario;
 
 import ticketsplease.Main;
+import ticketsplease.Settings;
 import ticketsplease.entity.Entity;
 import ticketsplease.entity.EntityRobot;
 import ticketsplease.renderer.Renderer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 
@@ -26,6 +29,8 @@ public class Scenario implements Disposable {
 	public Entity currentDragging = null;
 	float draggingX, draggingY;
 	float dragOriginX, dragOriginY;
+	
+	public Array<Conversation> conversations = new Array<>();
 
 	public Scenario(Main main) {
 		this.main = main;
@@ -68,6 +73,15 @@ public class Scenario implements Disposable {
 
 		for (Entity e : entities) {
 			e.renderUpdate();
+		}
+		
+		for(int i = conversations.size - 1; i >= 0; i--){
+			conversations.get(i).timer -= Gdx.graphics.getDeltaTime();
+			if(conversations.get(i).timer <= -1) conversations.removeIndex(i);
+		}
+		
+		if(Gdx.input.isKeyJustPressed(Keys.C) && Settings.debug){
+			conversations.add(new Conversation("ohajpdiouehipjfwahouehfadwafgsrhtdashasawrgswaeesfeafewarwafeaewffeawdf", MathUtils.randomBoolean()));
 		}
 	}
 
