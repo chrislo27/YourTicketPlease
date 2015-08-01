@@ -61,7 +61,6 @@ public class Scenario implements Disposable {
 			if(currentDragging != null){
 				currentDragging.x = (Gdx.input.getX() * 1f / Gdx.graphics.getWidth()) - dragOriginX;
 				currentDragging.y = ((Gdx.graphics.getHeight() - Gdx.input.getY()) * 1f / Gdx.graphics.getHeight()) - dragOriginY;
-				Main.logger.debug("pos: " + currentDragging.x + ", " + currentDragging.y);
 			}
 		} else {
 			currentDragging = null;
