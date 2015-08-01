@@ -71,8 +71,7 @@ public class Renderer implements Disposable {
 				height += (glyph.height + 12) * conv.timer;
 			}
 
-			glyph.setText(main.font, conv.text, Color.WHITE, 256, conv.wasPlayer ? Align.right
-					: Align.left, true);
+			glyph.setText(main.font, conv.text, Color.WHITE, 256, Align.left, true);
 
 			batch.setColor(0.7f, 0.7f, 0.7f, 1);
 			Main.fillRect(batch, Gdx.graphics.getWidth() - 16 - glyph.width - 4 - 4,
@@ -84,9 +83,8 @@ public class Renderer implements Disposable {
 					glyph.width + 4, -glyph.height - 4);
 			batch.setColor(1, 1, 1, 1);
 
-			main.font.draw(batch, conv.text, Gdx.graphics.getWidth() - 16 - glyph.width - 4,
-					Gdx.graphics.getHeight() - (height + main.font.getCapHeight()), 256,
-					Align.right, true);
+			main.font.draw(batch, glyph, Gdx.graphics.getWidth() - 16 - glyph.width - 4,
+					Gdx.graphics.getHeight() - (height + main.font.getCapHeight()));
 
 			if (conv.wasPlayer) {
 				batch.draw(AssetRegistry.getTexture("conversation-tick"), Gdx.graphics.getWidth()
