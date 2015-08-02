@@ -28,7 +28,7 @@ public class Renderer implements Disposable {
 	private GlyphLayout glyph = new GlyphLayout();
 
 	public float discrepancySweep = 0;
-	public float sweepWidth = 0.15f;
+	public float sweepWidth = 0.25f;
 
 	public Renderer(Scenario s) {
 		scenario = s;
