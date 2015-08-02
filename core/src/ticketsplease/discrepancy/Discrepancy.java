@@ -11,7 +11,7 @@ public class Discrepancy {
 		this.y = y;
 		width = w;
 		height = h;
-		discrepant = true;
+		discrepant = phony;
 	}
 	
 }
