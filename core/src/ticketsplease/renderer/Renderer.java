@@ -132,33 +132,36 @@ public class Renderer implements Disposable {
 		batch.end();
 
 		if (!scenario.discrepancyMode) return;
-		
+
 		batch.begin();
 		batch.setColor(0, 0, 0, 0.25f);
 		Main.fillRect(batch, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		batch.setColor(1, 1, 1, 1);
 		batch.end();
-		
+
 		Gdx.gl.glLineWidth(2f);
-		
+
 		StencilMaskUtil.prepareMask();
 		main.shapes.begin(ShapeType.Filled);
-		main.shapes.rect((discrepancySweep) * Gdx.graphics.getWidth(), 0,
-				(-sweepWidth) * Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		main.shapes.rect((discrepancySweep) * Gdx.graphics.getWidth(), 0, (-sweepWidth)
+				* Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		main.shapes.end();
 		StencilMaskUtil.useMask();
 		main.shapes.begin(ShapeType.Line);
 		for (Entity e : scenario.entities) {
 			main.shapes.rect(e.x * Gdx.graphics.getWidth(), e.y * Gdx.graphics.getHeight(),
 					Gdx.graphics.getWidth() * e.width, Gdx.graphics.getHeight() * e.height);
-			for(Discrepancy d : e.discrepancies){
-				main.shapes.rect((e.x + d.x) * Gdx.graphics.getWidth(), (e.y + d.y) * Gdx.graphics.getHeight(),
-						Gdx.graphics.getWidth() * (e.width + d.width), Gdx.graphics.getHeight() * (e.height + d.height));
+			for (Discrepancy d : e.discrepancies) {
+				main.shapes.rect(
+						(e.x * Gdx.graphics.getWidth()) * d.x + (e.x * Gdx.graphics.getWidth()),
+						(e.y * Gdx.graphics.getHeight()) * d.y + (e.y * Gdx.graphics.getHeight()),
+						(Gdx.graphics.getWidth() * e.width) * d.width,
+						(Gdx.graphics.getHeight() * e.height) * d.height);
 			}
 		}
 		main.shapes.end();
 		StencilMaskUtil.resetMask();
-		
+
 		Gdx.gl.glLineWidth(1f);
 	}
 
