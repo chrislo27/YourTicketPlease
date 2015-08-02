@@ -158,6 +158,8 @@ public class Renderer implements Disposable {
 		}
 		main.shapes.end();
 		StencilMaskUtil.resetMask();
+		
+		Gdx.gl.glLineWidth(1f);
 	}
 
 	@Override
