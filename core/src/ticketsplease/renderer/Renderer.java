@@ -1,6 +1,7 @@
 package ticketsplease.renderer;
 
 import ticketsplease.Main;
+import ticketsplease.Settings;
 import ticketsplease.discrepancy.Discrepancy;
 import ticketsplease.entity.Entity;
 import ticketsplease.registry.AssetRegistry;
@@ -37,7 +38,7 @@ public class Renderer implements Disposable {
 
 	public void renderUpdate() {
 		if (discrepancySweep > 0) {
-			discrepancySweep -= Gdx.graphics.getDeltaTime() * 1f;
+			discrepancySweep -= Gdx.graphics.getDeltaTime() * 1.5f;
 		}
 	}
 
@@ -131,7 +132,7 @@ public class Renderer implements Disposable {
 
 		batch.end();
 
-		if (!scenario.discrepancyMode) return;
+		if (!scenario.discrepancyMode && !Settings.debug) return;
 
 		batch.begin();
 		batch.setColor(0, 0, 0, 0.25f);
@@ -141,25 +142,29 @@ public class Renderer implements Disposable {
 
 		Gdx.gl.glLineWidth(2f);
 
-		StencilMaskUtil.prepareMask();
-		main.shapes.begin(ShapeType.Filled);
-		main.shapes.rect((discrepancySweep) * Gdx.graphics.getWidth(), 0, (-sweepWidth)
-				* Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		main.shapes.end();
-		StencilMaskUtil.useMask();
+		if (!Settings.debug) {
+			StencilMaskUtil.prepareMask();
+			main.shapes.begin(ShapeType.Filled);
+			main.shapes.rect((discrepancySweep) * Gdx.graphics.getWidth(), 0, (-sweepWidth)
+					* Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+			main.shapes.end();
+			StencilMaskUtil.useMask();
+		}
+
 		main.shapes.begin(ShapeType.Line);
 		for (Entity e : scenario.entities) {
 			main.shapes.rect(e.x * Gdx.graphics.getWidth(), e.y * Gdx.graphics.getHeight(),
 					Gdx.graphics.getWidth() * e.width, Gdx.graphics.getHeight() * e.height);
 			for (Discrepancy d : e.discrepancies) {
 				main.shapes.rect(
-						(e.x * Gdx.graphics.getWidth()) * d.x + (e.x * Gdx.graphics.getWidth()),
-						(e.y * Gdx.graphics.getHeight()) * d.y + (e.y * Gdx.graphics.getHeight()),
+						(e.width * Gdx.graphics.getWidth()) * d.x + (e.x * Gdx.graphics.getWidth()),
+						(e.height * Gdx.graphics.getHeight()) * d.y + (e.y * Gdx.graphics.getHeight()),
 						(Gdx.graphics.getWidth() * e.width) * d.width,
 						(Gdx.graphics.getHeight() * e.height) * d.height);
 			}
 		}
 		main.shapes.end();
+
 		StencilMaskUtil.resetMask();
 
 		Gdx.gl.glLineWidth(1f);
