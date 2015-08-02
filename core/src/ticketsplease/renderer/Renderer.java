@@ -1,6 +1,7 @@
 package ticketsplease.renderer;
 
 import ticketsplease.Main;
+import ticketsplease.discrepancy.Discrepancy;
 import ticketsplease.entity.Entity;
 import ticketsplease.registry.AssetRegistry;
 import ticketsplease.scenario.Conversation;
@@ -150,6 +151,10 @@ public class Renderer implements Disposable {
 		for (Entity e : scenario.entities) {
 			main.shapes.rect(e.x * Gdx.graphics.getWidth(), e.y * Gdx.graphics.getHeight(),
 					Gdx.graphics.getWidth() * e.width, Gdx.graphics.getHeight() * e.height);
+			for(Discrepancy d : e.discrepancies){
+				main.shapes.rect((e.x + d.x) * Gdx.graphics.getWidth(), (e.y + d.y) * Gdx.graphics.getHeight(),
+						Gdx.graphics.getWidth() * (e.width + d.width), Gdx.graphics.getHeight() * (e.height + d.height));
+			}
 		}
 		main.shapes.end();
 		StencilMaskUtil.resetMask();
