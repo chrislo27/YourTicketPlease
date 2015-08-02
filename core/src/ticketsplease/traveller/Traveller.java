@@ -11,7 +11,7 @@ import com.badlogic.gdx.Gdx;
 public class Traveller {
 
 	Scenario scenario;
-	int timeTaken = (int) (-1.5f * Main.TICKS);
+	int timeTaken = (int) (-1f * Main.TICKS);
 	
 	public Traveller(Scenario s){
 		scenario = s;
