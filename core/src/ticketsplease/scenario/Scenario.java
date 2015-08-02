@@ -1,5 +1,8 @@
 package ticketsplease.scenario;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import ticketsplease.Main;
 import ticketsplease.entity.Entity;
 import ticketsplease.entity.EntityDiscrepancyChecker;
@@ -38,6 +41,8 @@ public class Scenario implements Disposable {
 	public Traveller currentTraveller;
 
 	public boolean discrepancyMode = false;
+	
+	public Date currentDate = new GregorianCalendar(0, 1, 1).getTime();
 
 	public Scenario(Main main) {
 		this.main = main;
