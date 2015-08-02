@@ -32,7 +32,7 @@ public abstract class Entity {
 	
 	public boolean checkForDiscrepancies(float partX, float partY){
 		for(Discrepancy d : discrepancies){
-			if(partX >= d.x && partX <= d.x + d.width && partY >= d.y && partY <= d.y + d.height){
+			if(partX > d.x && partX < d.x + d.width && partY > d.y && partY < d.y + d.height){
 				if(d.discrepant) return true;
 			}
 		}
