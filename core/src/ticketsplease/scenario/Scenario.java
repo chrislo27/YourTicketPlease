@@ -2,7 +2,7 @@ package ticketsplease.scenario;
 
 import ticketsplease.Main;
 import ticketsplease.entity.Entity;
-import ticketsplease.entity.EntityRobot;
+import ticketsplease.entity.EntityDiscrepancyChecker;
 import ticketsplease.entity.EntityTicket;
 import ticketsplease.renderer.Renderer;
 import ticketsplease.traveller.Traveller;
@@ -37,6 +37,8 @@ public class Scenario implements Disposable {
 	public Array<Conversation> conversations = new Array<>();
 
 	public Traveller currentTraveller;
+	
+	public boolean discrepancyMode = false;
 
 	public Scenario(Main main) {
 		this.main = main;
@@ -44,7 +46,7 @@ public class Scenario implements Disposable {
 		renderer = new Renderer(this);
 
 		entities.clear();
-		entities.add(new EntityRobot(this, 0, 0));
+		entities.add(new EntityDiscrepancyChecker(this, 0.1f, 0.1f));
 	}
 
 	public void render() {
@@ -57,12 +59,7 @@ public class Scenario implements Disposable {
 			for (int i = entities.size - 1; i >= 0; i--) {
 				Entity e = entities.get(i);
 				if (currentDragging != null) break;
-				if (Gdx.input.getX() >= e.x * Gdx.graphics.getWidth()
-						&& Gdx.input.getX() <= (e.x + e.width) * Gdx.graphics.getWidth()
-						&& (Gdx.graphics.getHeight() - Gdx.input.getY()) >= e.y
-								* Gdx.graphics.getHeight()
-						&& (Gdx.graphics.getHeight() - Gdx.input.getY()) <= (e.y + e.height)
-								* Gdx.graphics.getHeight()) {
+				if (isMouseOverEntity(e)) {
 					currentDragging = e;
 					dragOriginX = ((Gdx.input.getX() * 1f / Gdx.graphics.getWidth()) - e.x);
 					dragOriginY = (((Gdx.graphics.getHeight() - Gdx.input.getY()) * 1f / Gdx.graphics
@@ -85,15 +82,23 @@ public class Scenario implements Disposable {
 			}
 		}
 
-		if (Utils.isButtonJustPressed(Buttons.RIGHT) && !Gdx.input.isButtonPressed(Buttons.LEFT)) {
+		if(Utils.isButtonJustPressed(Buttons.RIGHT) && !Gdx.input.isButtonPressed(Buttons.LEFT)){
 			for (Entity e : entities) {
 				if (currentDragging != null) break;
-				if (Gdx.input.getX() >= e.x * Gdx.graphics.getWidth()
-						&& Gdx.input.getX() <= (e.x + e.width) * Gdx.graphics.getWidth()
-						&& (Gdx.graphics.getHeight() - Gdx.input.getY()) >= e.y
-								* Gdx.graphics.getHeight()
-						&& (Gdx.graphics.getHeight() - Gdx.input.getY()) <= (e.y + e.height)
-								* Gdx.graphics.getHeight()) {
+				if (isMouseOverEntity(e)) {
+					e.onInteractStart(renderer,
+							((Gdx.input.getX() * 1f / Gdx.graphics.getWidth()) - e.x),
+							(((Gdx.graphics.getHeight() - Gdx.input.getY()) * 1f / Gdx.graphics
+									.getHeight()) - e.y));
+					break;
+				}
+			}
+		}
+		
+		if (Gdx.input.isButtonPressed(Buttons.RIGHT) && !Gdx.input.isButtonPressed(Buttons.LEFT)) {
+			for (Entity e : entities) {
+				if (currentDragging != null) break;
+				if (isMouseOverEntity(e)) {
 					e.onInteract(renderer,
 							((Gdx.input.getX() * 1f / Gdx.graphics.getWidth()) - e.x),
 							(((Gdx.graphics.getHeight() - Gdx.input.getY()) * 1f / Gdx.graphics
@@ -117,6 +122,26 @@ public class Scenario implements Disposable {
 				getNextTraveller();
 			}
 		}
+	}
+	
+	/**
+	 * Inverts discrepancyMode but with fancy animations
+	 */
+	public void toggleDiscrepancyMode(){
+		discrepancyMode = !discrepancyMode;
+	}
+	
+	public boolean isMouseOverEntity(Entity e){
+		if (Gdx.input.getX() >= e.x * Gdx.graphics.getWidth()
+				&& Gdx.input.getX() <= (e.x + e.width) * Gdx.graphics.getWidth()
+				&& (Gdx.graphics.getHeight() - Gdx.input.getY()) >= e.y
+						* Gdx.graphics.getHeight()
+				&& (Gdx.graphics.getHeight() - Gdx.input.getY()) <= (e.y + e.height)
+						* Gdx.graphics.getHeight()) {
+			return true;
+		}
+		
+		return false;
 	}
 
 	public void tickUpdate() {

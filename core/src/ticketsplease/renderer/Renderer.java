@@ -7,6 +7,7 @@ import ticketsplease.scenario.Conversation;
 import ticketsplease.scenario.Scenario;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -42,7 +43,8 @@ public class Renderer implements Disposable {
 		for (Entity e : scenario.entities) {
 			if (scenario.currentDragging == e) continue;
 			if (!e.isBeingReturned) continue;
-			e.render(this);
+			e.render(this,
+					scenario.isMouseOverEntity(e) && Gdx.input.isButtonPressed(Buttons.RIGHT));
 		}
 
 		batch.draw(AssetRegistry.getTexture("desk"), 0, 0, Gdx.graphics.getWidth(),
@@ -52,12 +54,16 @@ public class Renderer implements Disposable {
 		for (Entity e : scenario.entities) {
 			if (scenario.currentDragging == e) continue;
 			if (e.isBeingReturned) continue;
-			e.render(this);
+			e.render(this,
+					scenario.isMouseOverEntity(e) && Gdx.input.isButtonPressed(Buttons.RIGHT));
 		}
 
 		// the current one you're dragging
 		if (scenario.currentDragging != null) {
-			scenario.currentDragging.render(this);
+			scenario.currentDragging.render(
+					this,
+					scenario.isMouseOverEntity(scenario.currentDragging)
+							&& Gdx.input.isButtonPressed(Buttons.RIGHT));
 		}
 
 		batch.flush();
@@ -66,14 +72,14 @@ public class Renderer implements Disposable {
 		float combinedHeight = 0;
 		for (int i = 0; i < scenario.conversations.size; i++) {
 			Conversation conv = scenario.conversations.get(i);
-			
+
 			if (conv.timer <= 0 && conv.timer >= -1) {
 				combinedHeight += (glyph.height + 12) * conv.timer;
 			}
-			
+
 			float height = combinedHeight;
-			
-			if(conv.timer <= -1){
+
+			if (conv.timer <= -1) {
 				conv.shouldRemove = true;
 				continue;
 			}
@@ -106,9 +112,9 @@ public class Renderer implements Disposable {
 
 			combinedHeight += 12 + glyph.height;
 		}
-		
-		if(combinedHeight > Gdx.graphics.getHeight() && scenario.conversations.size >= 1){
-			if(scenario.conversations.get(0).timer > 0) scenario.conversations.get(0).timer = 0;
+
+		if (combinedHeight > Gdx.graphics.getHeight() && scenario.conversations.size >= 1) {
+			if (scenario.conversations.get(0).timer > 0) scenario.conversations.get(0).timer = 0;
 		}
 
 		batch.end();

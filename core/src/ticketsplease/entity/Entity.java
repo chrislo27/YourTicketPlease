@@ -20,9 +20,11 @@ public abstract class Entity {
 		scenario = s;
 	}
 	
-	public abstract void render(Renderer renderer);
+	public abstract void render(Renderer renderer, boolean interacting);
 	
 	public abstract void onInteract(Renderer renderer, float partX, float partY);
+	
+	public abstract void onInteractStart(Renderer renderer, float partX, float partY);
 	
 	public void renderUpdate(){
 		if(x < scenario.xBoundary){
