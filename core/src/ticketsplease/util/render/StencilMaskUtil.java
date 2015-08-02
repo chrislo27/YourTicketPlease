@@ -3,6 +3,19 @@ package ticketsplease.util.render;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 
+/**
+ * prepareMask();
+ * <br>
+ * render stencil
+ * <br>
+ * useMask();
+ * <br>
+ * render culling things
+ * <br>
+ * resetMask();
+ * 
+ *
+ */
 public class StencilMaskUtil {
 
 	/**
