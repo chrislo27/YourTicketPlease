@@ -5,6 +5,7 @@ import ticketsplease.entity.Entity;
 import ticketsplease.registry.AssetRegistry;
 import ticketsplease.scenario.Conversation;
 import ticketsplease.scenario.Scenario;
+import ticketsplease.util.render.StencilMaskUtil;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Disposable;
 
@@ -23,10 +25,19 @@ public class Renderer implements Disposable {
 
 	private GlyphLayout glyph = new GlyphLayout();
 
+	public float discrepancySweep = 0;
+	public float sweepWidth = 0.15f;
+
 	public Renderer(Scenario s) {
 		scenario = s;
 		main = scenario.main;
 		batch = main.batch;
+	}
+
+	public void renderUpdate() {
+		if (discrepancySweep > 0) {
+			discrepancySweep -= Gdx.graphics.getDeltaTime() * 1f;
+		}
 	}
 
 	public void render() {
@@ -118,6 +129,30 @@ public class Renderer implements Disposable {
 		}
 
 		batch.end();
+
+		if (!scenario.discrepancyMode) return;
+		
+		batch.begin();
+		batch.setColor(0, 0, 0, 0.25f);
+		Main.fillRect(batch, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		batch.setColor(1, 1, 1, 1);
+		batch.end();
+		
+		Gdx.gl.glLineWidth(2f);
+		
+		StencilMaskUtil.prepareMask();
+		main.shapes.begin(ShapeType.Filled);
+		main.shapes.rect((discrepancySweep) * Gdx.graphics.getWidth(), 0,
+				(-sweepWidth) * Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		main.shapes.end();
+		StencilMaskUtil.useMask();
+		main.shapes.begin(ShapeType.Line);
+		for (Entity e : scenario.entities) {
+			main.shapes.rect(e.x * Gdx.graphics.getWidth(), e.y * Gdx.graphics.getHeight(),
+					Gdx.graphics.getWidth() * e.width, Gdx.graphics.getHeight() * e.height);
+		}
+		main.shapes.end();
+		StencilMaskUtil.resetMask();
 	}
 
 	@Override

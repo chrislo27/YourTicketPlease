@@ -480,6 +480,7 @@ public class Main extends Game implements Consumer {
 	@Override
 	public void resize(int width, int height) {
 		camera.setToOrtho(false, width, height);
+		shapes.setProjectionMatrix(Main.camera.combined);
 		
 		for(Updateable up : ScreenRegistry.instance().getAll()){
 			up.container.onResize();

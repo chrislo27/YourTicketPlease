@@ -37,7 +37,7 @@ public class Scenario implements Disposable {
 	public Array<Conversation> conversations = new Array<>();
 
 	public Traveller currentTraveller;
-	
+
 	public boolean discrepancyMode = false;
 
 	public Scenario(Main main) {
@@ -54,6 +54,8 @@ public class Scenario implements Disposable {
 	}
 
 	public void renderUpdate() {
+		renderer.renderUpdate();
+		
 		// calc currentDragging
 		if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
 			for (int i = entities.size - 1; i >= 0; i--) {
@@ -74,27 +76,34 @@ public class Scenario implements Disposable {
 						.getHeight()) - dragOriginY;
 			}
 		} else {
-			if(currentDragging != null){
+			if (currentDragging != null) {
 				entities.removeValue(currentDragging, true);
 				entities.insert(entities.size, currentDragging);
-				
+
 				currentDragging = null;
 			}
 		}
 
-		if(Utils.isButtonJustPressed(Buttons.RIGHT) && !Gdx.input.isButtonPressed(Buttons.LEFT)){
+		if (Utils.isButtonJustPressed(Buttons.RIGHT) && !Gdx.input.isButtonPressed(Buttons.LEFT)) {
 			for (Entity e : entities) {
 				if (currentDragging != null) break;
 				if (isMouseOverEntity(e)) {
-					e.onInteractStart(renderer,
-							((Gdx.input.getX() * 1f / Gdx.graphics.getWidth()) - e.x),
-							(((Gdx.graphics.getHeight() - Gdx.input.getY()) * 1f / Gdx.graphics
-									.getHeight()) - e.y));
+					if (discrepancyMode && e.discrepancies.size > 0) {
+						boolean foundSomething = e.checkForDiscrepancies(
+								((Gdx.input.getX() * 1f / Gdx.graphics.getWidth()) - e.x),
+								(((Gdx.graphics.getHeight() - Gdx.input.getY()) * 1f / Gdx.graphics
+										.getHeight()) - e.y));
+					} else {
+						e.onInteractStart(renderer, ((Gdx.input.getX() * 1f / Gdx.graphics
+								.getWidth()) - e.x),
+								(((Gdx.graphics.getHeight() - Gdx.input.getY()) * 1f / Gdx.graphics
+										.getHeight()) - e.y));
+					}
 					break;
 				}
 			}
 		}
-		
+
 		if (Gdx.input.isButtonPressed(Buttons.RIGHT) && !Gdx.input.isButtonPressed(Buttons.LEFT)) {
 			for (Entity e : entities) {
 				if (currentDragging != null) break;
@@ -123,24 +132,24 @@ public class Scenario implements Disposable {
 			}
 		}
 	}
-	
+
 	/**
 	 * Inverts discrepancyMode but with fancy animations
 	 */
-	public void toggleDiscrepancyMode(){
+	public void toggleDiscrepancyMode() {
 		discrepancyMode = !discrepancyMode;
+		if(discrepancyMode == true) renderer.discrepancySweep = 1f;
 	}
-	
-	public boolean isMouseOverEntity(Entity e){
+
+	public boolean isMouseOverEntity(Entity e) {
 		if (Gdx.input.getX() >= e.x * Gdx.graphics.getWidth()
 				&& Gdx.input.getX() <= (e.x + e.width) * Gdx.graphics.getWidth()
-				&& (Gdx.graphics.getHeight() - Gdx.input.getY()) >= e.y
-						* Gdx.graphics.getHeight()
+				&& (Gdx.graphics.getHeight() - Gdx.input.getY()) >= e.y * Gdx.graphics.getHeight()
 				&& (Gdx.graphics.getHeight() - Gdx.input.getY()) <= (e.y + e.height)
 						* Gdx.graphics.getHeight()) {
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -149,12 +158,12 @@ public class Scenario implements Disposable {
 			currentTraveller.tickUpdate();
 		}
 	}
-	
-	public void spawnTicket(){
+
+	public void spawnTicket() {
 		EntityTicket ticket = new EntityTicket(this, 0.5f, 0.5f);
 		ticket.x = (xBoundary + sizex / 2f) - ticket.width / 2f;
 		ticket.y = (yBoundary + sizey);
-		
+
 		entities.add(ticket);
 	}
 
