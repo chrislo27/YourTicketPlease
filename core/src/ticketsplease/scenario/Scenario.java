@@ -17,7 +17,6 @@ import com.badlogic.gdx.utils.Disposable;
 public class Scenario implements Disposable {
 
 	public float chanceOfInvalidTicket = 0.34327f;
-	public float chanceOfNotEnoughMoney = 0.5f;
 
 	public Array<Entity> entities = new Array<>();
 
