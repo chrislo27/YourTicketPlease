@@ -38,7 +38,7 @@ public class EntityTrainList extends Entity {
 
 			renderer.main.font.setColor(0, 0, 0, 1);
 			renderer.main.font.draw(renderer.batch,
-					Integer.toHexString(Color.rgb888(scenario.todayTrains.get(i))).toUpperCase(),
+					Integer.toHexString(Color.rgb888(scenario.todayTrains.get(i))),
 					(x + 0.4f * width) * Gdx.graphics.getWidth(),
 					(y + 0.225f * height + ((i) * 0.075f)) * Gdx.graphics.getHeight());
 			renderer.main.font.setColor(1, 1, 1, 1);
