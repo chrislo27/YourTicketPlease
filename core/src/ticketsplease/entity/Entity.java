@@ -40,6 +40,14 @@ public abstract class Entity {
 		return false;
 	}
 	
+	public boolean isAnythingDiscrepant(){
+		for(Discrepancy d : discrepancies){
+			if(d.discrepant) return true;
+		}
+		
+		return false;
+	}
+	
 	public void renderUpdate(){
 		if(x < scenario.xBoundary){
 			x = scenario.xBoundary;
