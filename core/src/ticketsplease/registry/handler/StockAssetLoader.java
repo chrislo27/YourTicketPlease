@@ -77,6 +77,9 @@ public class StockAssetLoader implements IAssetLoader {
 		manager.load(AssetMap.add("discrepancy_base", "images/entity/discrepancybutton/base.png"), Texture.class);
 		manager.load(AssetMap.add("discrepancy_button", "images/entity/discrepancybutton/button.png"), Texture.class);
 		manager.load(AssetMap.add("discrepancy_button_pushed", "images/entity/discrepancybutton/button_pushed.png"), Texture.class);
+		manager.load(AssetMap.add("trainlist", "images/entity/trainList.png"), Texture.class);
+		manager.load(AssetMap.add("trainIcon", "images/entity/trainIcon.png"), Texture.class);
+		manager.load(AssetMap.add("trainIconLine", "images/entity/trainIconLine.png"), Texture.class);
 		
 		// sfx
 

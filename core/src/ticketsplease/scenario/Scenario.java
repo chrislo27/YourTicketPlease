@@ -7,6 +7,7 @@ import ticketsplease.Main;
 import ticketsplease.entity.Entity;
 import ticketsplease.entity.EntityDiscrepancyChecker;
 import ticketsplease.entity.EntityTicket;
+import ticketsplease.entity.EntityTrainList;
 import ticketsplease.renderer.Renderer;
 import ticketsplease.traveller.Traveller;
 import ticketsplease.util.Utils;
@@ -14,12 +15,14 @@ import ticketsplease.util.Utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 
 public class Scenario implements Disposable {
 
-	public float chanceOfInvalidTicket = 0.34327f;
+	public float chanceOfInvalidTicket = 0.35f;
 
 	public Array<Entity> entities = new Array<>();
 
@@ -43,6 +46,8 @@ public class Scenario implements Disposable {
 	public boolean discrepancyMode = false;
 	
 	public Date currentDate = new GregorianCalendar(0, 1, 1).getTime();
+	
+	public Array<Color> todayTrains = new Array<>(3);
 
 	public Scenario(Main main) {
 		this.main = main;
@@ -51,6 +56,9 @@ public class Scenario implements Disposable {
 
 		entities.clear();
 		entities.add(new EntityDiscrepancyChecker(this, 0.1f, 0.1f));
+		entities.add(new EntityTrainList(this, 0.2f, 0.1f));
+		
+		generateTodaysTrains();
 	}
 
 	public void render() {
@@ -120,6 +128,10 @@ public class Scenario implements Disposable {
 				}
 			}
 		}
+		
+		if(Gdx.input.isKeyJustPressed(Keys.SPACE)){
+			toggleDiscrepancyMode();
+		}
 
 		for (Entity e : entities) {
 			e.renderUpdate();
@@ -143,6 +155,18 @@ public class Scenario implements Disposable {
 	public void toggleDiscrepancyMode() {
 		discrepancyMode = !discrepancyMode;
 		if(discrepancyMode == true) renderer.discrepancySweep = 1f;
+	}
+	
+	public void generateTodaysTrains(){
+		for(int i = 0; i < 3; i++){
+			if(todayTrains.size >= i){
+				todayTrains.insert(i, new Color());
+			}
+			
+			todayTrains.get(i).set(Utils.HSBtoRGBA8888(Math.abs(MathUtils.random(-1f, 1f)), 0.75f, 0.75f));
+		}
+		
+		if(todayTrains.size > 3) todayTrains.removeRange(3, todayTrains.size - 1);
 	}
 
 	public boolean isMouseOverEntity(Entity e) {
