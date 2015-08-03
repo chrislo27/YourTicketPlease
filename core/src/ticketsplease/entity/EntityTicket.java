@@ -25,6 +25,8 @@ public class EntityTicket extends Entity {
 	public EntityTicket(Scenario s, float x, float y) {
 		super(s, x, y, 512f / Settings.DEFAULT_WIDTH, 256f / Settings.DEFAULT_HEIGHT);
 
+		boolean shouldBeError = MathUtils.randomBoolean(scenario.chanceOfInvalidTicket);
+		
 		// line colour discrepancy
 		discrepancies.add(new Discrepancy(0, 0, 1f, 0.1796875f, false));
 		lineColor = new Color(
@@ -35,6 +37,10 @@ public class EntityTicket extends Entity {
 
 		// destination
 		discrepancies.add(new Discrepancy(0.025f, 0.925f - 0.11f - 0.125f, 0.5f - 0.025f, 0.125f,
+				false));
+		
+		// date valid
+		discrepancies.add(new Discrepancy(0.025f, 0.925f - 0.11f - 0.25f, 0.5f - 0.025f, 0.125f,
 				false));
 	}
 
@@ -56,6 +62,12 @@ public class EntityTicket extends Entity {
 		renderer.main.font.draw(renderer.batch, Translator.getMsg("ticket.destination") + ": " + destination, (x + (width * 0.025f))
 				* Gdx.graphics.getWidth(),
 				(y + (height * (0.925f - 0.125f))) * Gdx.graphics.getHeight());
+		renderer.main.font.draw(renderer.batch, Translator.getMsg("ticket.date") + ": ", (x + (width * 0.025f))
+				* Gdx.graphics.getWidth(),
+				(y + (height * (0.925f - 0.25f))) * Gdx.graphics.getHeight());
+		renderer.main.font.draw(renderer.batch, Translator.getMsg("ticket.trainid") + ": " + Integer.toHexString(Color.rgb888(lineColor)), (x + (width * 0.025f))
+				* Gdx.graphics.getWidth(),
+				(y + (height * (0.925f - 0.25f))) * Gdx.graphics.getHeight());
 		renderer.main.font.setColor(1, 1, 1, 1);
 	}
 
