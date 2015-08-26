@@ -18,7 +18,6 @@ import ticketsplease.registry.ErrorLogRegistry;
 import ticketsplease.registry.ScreenRegistry;
 import ticketsplease.screen.AssetLoadingScreen;
 import ticketsplease.screen.MainMenuScreen;
-import ticketsplease.screen.ScenarioScreen;
 import ticketsplease.screen.Updateable;
 import ticketsplease.transition.TrainDoors;
 import ticketsplease.transition.Transition;
@@ -247,7 +246,6 @@ public class Main extends Game implements Consumer {
 		reg.add("mainmenu", new MainMenuScreen(this));
 		reg.add("assetloading", new AssetLoadingScreen(this));
 		reg.add("transition", new TransitionScreen(this));
-		reg.add("scenario", new ScenarioScreen(this));
 	}
 
 	@Override
